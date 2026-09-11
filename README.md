@@ -2,7 +2,7 @@
 
 The Terraform provider: namespaces, workflow repositories, grants, groups, service
 accounts, API tokens, secret declarations and triggers. A client of `/api/v1` holding no
-authority of its own — a plan applies as the presenting principal and is refused by the
+authority of its own: a plan applies as the presenting principal and is refused by the
 same grants that refuse the console.
 
 Two things it deliberately does not manage. The contents of a workflow, because
@@ -11,7 +11,7 @@ disagrees with it at the first push. Secret values, because a value passing thro
 Terraform is a value in the state file.
 
 Runs it does manage, in a shape that keeps an apply idempotent: `agentiik_run` declares
-that a run of a workflow, at a commit, with given inputs, has happened — change none of
+that a run of a workflow, at a commit, with given inputs, has happened. Change none of
 those and applying again starts nothing. For the genuinely imperative case there is a
 provider action, requiring Terraform 1.14.
 
