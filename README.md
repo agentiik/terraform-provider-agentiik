@@ -5,17 +5,21 @@ accounts, API tokens, secret declarations and triggers. A client of `/api/v1` ho
 authority of its own — a plan applies as the presenting principal and is refused by the
 same grants that refuse the console.
 
-Three things it deliberately does not manage. The contents of a workflow, because
+Two things it deliberately does not manage. The contents of a workflow, because
 `agentiik.yaml` is already the source of truth and HCL would be a second one that
-disagrees with it at the first push. Runs, because starting one is an act rather than a
-state and would make an apply non-idempotent in the one way the tool cannot tolerate.
-Secret values, because a value passing through Terraform is a value in the state file.
+disagrees with it at the first push. Secret values, because a value passing through
+Terraform is a value in the state file.
 
-Built against the plugin protocol and published to the Terraform registry and the
-OpenTofu one, and tested against both. Terraform moved to the Business Source License in
-2023 and is no longer open source; a project that declined to ship source-available
-software cannot then require its users to run some. Which of the two you run is your
-decision and costs you nothing here.
+Runs it does manage, in a shape that keeps an apply idempotent: `agentiik_run` declares
+that a run of a workflow, at a commit, with given inputs, has happened — change none of
+those and applying again starts nothing. For the genuinely imperative case there is a
+provider action, requiring Terraform 1.14.
+
+Published to the Terraform registry. The provider is Apache-2.0 and is built on a plugin
+framework that is MPL-2.0, so nothing source-available enters this repository; Terraform
+itself has been under the Business Source License since 2023, which is a choice its users
+made and not one this project makes for them. OpenTofu implements the same plugin
+protocol and is not excluded, but it is not tested there.
 
 Nothing is implemented yet. The provider is specified at
 <https://agentiik.github.io/docs#terraform>.
